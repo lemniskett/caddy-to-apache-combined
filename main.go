@@ -13,7 +13,7 @@ type CaddyLog struct {
 	Level   string  `json:"level"`
 	TS      float64 `json:"ts"`
 	Request struct {
-		RemoteIP string `json:"remote_ip"`
+		ClientIP string `json:"client_ip"`
 		Proto    string `json:"proto"`
 		Method   string `json:"method"`
 		Host     string `json:"host"`
@@ -29,7 +29,7 @@ type CaddyLog struct {
 }
 
 func (c *CaddyLog) toCombinedLogFormat() string {
-	remoteIP := c.Request.RemoteIP
+	clientIP := c.Request.ClientIP
 
 	logname := "-"
 
@@ -59,7 +59,7 @@ func (c *CaddyLog) toCombinedLogFormat() string {
 	}
 
 	return fmt.Sprintf(`%s %s %s [%s] "%s" %d %d "%s" "%s"`,
-		remoteIP,
+		clientIP,
 		logname,
 		user,
 		timestamp,
@@ -105,4 +105,3 @@ func main() {
 		processLogs(os.Stdin)
 	}
 }
-
